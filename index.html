@@ -2,811 +2,319 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <title>Alfie Ben Levey</title>
 
-
 <style>
 
-
 html,body{
-
 width:100%;
 height:100%;
-
 margin:0;
-
 overflow:hidden;
-
+font-family:Arial, Helvetica, sans-serif;
 }
 
-
-
+/* BASE THEME */
 body{
-
-min-height:100vh;
-min-height:100dvh;
-
 display:flex;
-
 justify-content:center;
-
 align-items:center;
-
-
-font-family:Arial,Helvetica,sans-serif;
-
 color:white;
-
-
-background:
-
-radial-gradient(circle,#202020,#121212,#050505);
-
+background:radial-gradient(circle,#202020,#121212,#050505);
 transition:.5s;
-
 }
 
 
-
+/* BUTTON */
 .themeButton{
-
 position:absolute;
-
-top:25px;
-
-right:25px;
-
-z-index:999;
-
+top:20px;
+right:20px;
 width:45px;
-
 height:45px;
-
 border-radius:50%;
-
 border:1px solid rgba(255,255,255,.2);
-
 background:rgba(255,255,255,.1);
-
-color:white;
-
-font-size:20px;
-
 cursor:pointer;
-
-backdrop-filter:blur(10px);
-
+font-size:18px;
+z-index:10;
 }
 
 
-
+/* CARD */
 .card{
-
-position:relative;
-
-z-index:5;
-
 text-align:center;
-
-
-width:min(650px,82vw);
-
-
-padding:80px 60px;
-
-
+width:min(650px,85vw);
+padding:70px 50px;
+border-radius:30px;
 background:rgba(255,255,255,.06);
-
-
 border:1px solid rgba(255,255,255,.15);
-
-
-border-radius:35px;
-
-
 backdrop-filter:blur(20px);
-
-
-box-shadow:
-
-0 30px 100px rgba(0,0,0,.7);
-
-
-transition:.35s;
-
 }
 
+h1{margin:0;font-size:clamp(2rem,6vw,4rem);}
+p{margin-top:35px;color:rgba(255,255,255,.75);}
 
 
-.card:hover{
-
-transform:
-
-translateY(-10px)
-
-scale(1.03);
-
-
-box-shadow:
-
-0 45px 130px rgba(0,0,0,.9);
-
-}
-
-
-
-
-h1{
-
-margin:0;
-
-font-size:clamp(2.2rem,6vw,4rem);
-
-letter-spacing:5px;
-
-}
-
-
-
-p{
-
-margin-top:40px;
-
-color:rgba(255,255,255,.75);
-
-}
-
-
-
-.hidden{
-
-display:none;
-
-}
-
-
-
-
+/* ACHIEVEMENTS */
+.hidden{display:none;}
 
 #list{
-
 max-height:45vh;
-
 overflow-y:auto;
-
 }
-
-
 
 .achievement{
-
 text-align:left;
-
-margin:15px 0;
-
-padding:15px;
-
-border-radius:18px;
-
+margin:12px 0;
+padding:12px;
+border-radius:12px;
 background:rgba(255,255,255,.08);
-
 }
 
-
-
-.locked{
-
-opacity:.45;
-
-}
-
-
+.locked{opacity:.4;}
 
 .reset{
-
 margin-top:20px;
-
 padding:10px 20px;
-
-border-radius:20px;
-
+border-radius:15px;
 border:none;
-
 cursor:pointer;
-
 }
 
 
-
-
+/* LIGHT MODE */
 .light{
-
-background:
-
-radial-gradient(circle,#eee,#bbb,#777);
-
+background:radial-gradient(circle,#eee,#bbb,#777);
 color:#111;
-
 }
-
-
 
 .light .card{
-
 background:rgba(255,255,255,.45);
-
 }
-
-
 
 .light p{
-
 color:#222;
-
 }
 
 
-
-.light .themeButton{
-
-color:#111;
-
-}
-
-
-
+/* SECRET MODE */
 .secret{
-
 color:white;
-
 }
-
-
 
 .secret .card{
-
 background:rgba(0,0,0,.35);
-
 }
-
-
 
 .secret p{
-
 color:white;
-
 }
-
-
-
-
 
 </style>
 
 </head>
 
-
 <body>
-
-
 
 <button class="themeButton" onclick="toggleTheme()">☀</button>
 
-
-
-
 <div class="card" id="main">
-
-
 <h1>Alfie Ben Levey</h1>
-
-
 <p>I'm better than you and you know it</p>
-
-
 </div>
-
-
-
 
 
 
 <div class="card hidden" id="achievements">
 
-
 <h1>Achievements</h1>
-
 
 <div id="list"></div>
 
-
-<button class="reset" onclick="resetAsk()">
-
-Reset
-
-</button>
-
-
+<button class="reset" onclick="resetAch()">Reset</button>
 <br><br>
-
-
-<button onclick="closeAchievements()">
-
-Back
-
-</button>
-
+<button onclick="closeAch()">Back</button>
 
 </div>
-
-
-
-
 
 
 
 <script>
 
+/* STORAGE */
+let data = JSON.parse(localStorage.getItem("achievements")) || {};
 
-let data =
-JSON.parse(localStorage.getItem("achievements")) || {};
-
-
-
-let cardClicks=0;
-
-let opens=0;
-
-let clicks=[];
-
-let secretActive=false;
-
-let start=Date.now();
-
-let normalBackground=
-
-"radial-gradient(circle,#202020,#121212,#050505)";
+/* STATES */
+let clicks = [];
+let secret = false;
+let light = false;
+let opens = 0;
+let cardClicks = 0;
+let start = Date.now();
 
 
-
-
-
-
-
-const achievements={
-
-
-welcome:[
-"Welcome",
-"Something happens when you arrive...",
-"You opened the site."
-],
-
-
-explorer:[
-"Explorer",
-"The card may hide something...",
-"You found achievements."
-],
-
-
-colour:[
-"Colour Hunter",
-"Try pressing something a lot...",
-"You found the secret themes."
-],
-
-
-night:[
-"Night Mode",
-"Try the button...",
-"You changed the theme."
-],
-
-
-early:[
-"Early Visitor",
-"Time matters...",
-"You visited before 06:00."
-],
-
-
-professional:[
-"Professional",
-"Wait around...",
-"You stayed for a while."
-],
-
-
-collector:[
-"Collector",
-"Find more secrets...",
-"You collected achievements."
-],
-
-
-triopen:[
-"Triopen",
-"Three times is special...",
-"You opened achievements 3 times."
-],
-
-
-restart:[
-"Restarting",
-"Starting again...",
-"You reset achievements."
-],
-
-
-completion:[
-"Completionist",
-"Hidden",
-"You found everything."
-]
-
-
+/* ACHIEVEMENTS */
+const A = {
+welcome:["Welcome","Open the site","You arrived"],
+explorer:["Explorer","Click the card","You found achievements"],
+colour:["Colour Hunter","Find secrets","You unlocked secret themes"],
+night:["Night Mode","Use toggle","You changed theme"],
+early:["Early Bird","Visit early","You came before 6am"],
+professional:["Professional","Stay a while","You stayed 60s"],
+collector:["Collector","Keep exploring","You collected items"],
+triopen:["Triopen","Open menu 3 times","You did it"],
+restart:["Restarting","Reset game","You restarted everything"],
+completion:["Completionist","Hidden","You found everything"]
 };
 
 
-
-
-
-
+/* SAVE */
 function save(){
-
-localStorage.setItem(
-
-"achievements",
-
-JSON.stringify(data)
-
-);
-
+localStorage.setItem("achievements",JSON.stringify(data));
 }
 
-
-
-
-
+/* UNLOCK */
 function unlock(x){
-
 if(!data[x]){
-
 data[x]=true;
-
 save();
-
+}
 }
 
-}
 
-
-
-
-
-
-
+/* RENDER */
 function render(){
-
-
 let html="";
+let count = Object.keys(data).filter(x=>x!="completion").length;
 
+Object.keys(A).forEach(id=>{
 
-let count=
-
-Object.keys(achievements)
-
-.filter(x=>x!="completion")
-
-.filter(x=>data[x]).length;
-
-
-
-Object.keys(achievements).forEach(id=>{
-
-
-if(id=="completion" && count<9)return;
-
-
-
-let a=achievements[id];
-
-
+if(id=="completion" && count<9) return;
 
 html+=`
-
 <div class="achievement ${data[id]?"":"locked"}">
-
-
-<h3>${data[id]?"🏆":"🔒"} ${a[0]}</h3>
-
-
-<p>${data[id]?a[2]:a[1]}</p>
-
-
+<h3>${data[id]?"🏆":"🔒"} ${A[id][0]}</h3>
+<p>${data[id]?A[id][2]:A[id][1]}</p>
 </div>
-
 `;
-
 });
 
-
 document.getElementById("list").innerHTML=html;
-
-
 }
 
 
-
-
-
-
-
-
-document.getElementById("main").onclick=function(){
-
+/* CARD CLICK */
+document.getElementById("main").onclick=()=>{
 
 cardClicks++;
 
-
 if(cardClicks>=3){
-
-
 unlock("explorer");
-
-
 opens++;
-
-
-if(opens>=3)
-
-unlock("triopen");
-
-
+if(opens>=3) unlock("triopen");
 
 document.getElementById("main").classList.add("hidden");
-
-
 document.getElementById("achievements").classList.remove("hidden");
-
-
 render();
-
-
 }
-
 
 };
 
 
 
-
-
-
-function closeAchievements(){
-
+/* CLOSE */
+function closeAch(){
 document.getElementById("achievements").classList.add("hidden");
-
 document.getElementById("main").classList.remove("hidden");
-
 }
 
 
-
-
-
-
-
-
+/* THEME TOGGLE */
 function toggleTheme(){
 
-
-
-if(secretActive){
-
-
+/* TURN OFF SECRET */
+if(secret){
 document.body.classList.remove("secret");
-
-
-document.body.style.background=
-
-normalBackground;
-
-
-secretActive=false;
-
-
+document.body.style.background="radial-gradient(circle,#202020,#121212,#050505)";
+secret=false;
 return;
-
-
 }
 
-
-
+/* SECRET CLICK TRACK */
 clicks.push(Date.now());
-
-
-clicks=
-
-clicks.filter(x=>Date.now()-x<5000);
-
-
-
+clicks = clicks.filter(t=>Date.now()-t<5000);
 
 if(clicks.length>=5){
-
-
 secretTheme();
-
-
-secretActive=true;
-
-
 clicks=[];
-
-
 return;
-
-
 }
 
-
-
-document.body.classList.toggle("light");
-
+/* LIGHT MODE */
+light=!light;
+document.body.classList.toggle("light",light);
 
 unlock("night");
 
-
 }
 
 
-
-
-
-
-
-
+/* DAILY SECRET THEME */
 function secretTheme(){
 
-
-
 let themes=[
-
-
 ["#ff7eb3","#65d6ff"],
-
 ["#9b5cff","#00ffcc"],
-
 ["#ff9966","#ff5e62"],
-
 ["#00c6ff","#0072ff"],
-
 ["#43e97b","#38f9d7"],
-
 ["#f7971e","#ffd200"],
-
 ["#ee0979","#ff6a00"],
-
 ["#654ea3","#eaafc8"],
-
 ["#141e30","#243b55"],
-
 ["#000428","#004e92"]
-
-
 ];
 
-
-
 let d=new Date();
+let seed = d.getFullYear()+d.getMonth()+d.getDate();
 
+let t = themes[seed % themes.length];
 
-let seed=
-
-d.getFullYear()
-
-+d.getMonth()
-
-+d.getDate();
-
-
-
-let theme=
-
-themes[seed % themes.length];
-
-
-
-document.body.style.background=
-
-`radial-gradient(circle,${theme[0]},${theme[1]})`;
-
-
+document.body.style.background =
+`radial-gradient(circle,${t[0]},${t[1]})`;
 
 document.body.classList.add("secret");
 
+secret = true;
 
 unlock("colour");
 
 }
 
 
-
-
-
-
-
-function resetAsk(){
-
-
-if(confirm("Are you sure?")){
-
-
-let hadRestart=data.restart;
-
-
+/* RESET */
+function resetAch(){
+if(confirm("Reset achievements?")){
 data={};
-
-
-
-if(!hadRestart)
-
-data.restart=true;
-
-
-
 save();
-
-
 render();
-
-
 }
-
 }
 
 
-
-
-
-
-if(Object.keys(data).length===0)
-
-unlock("welcome");
-
-
-
-
-if(new Date().getHours()<6)
-
-unlock("early");
-
-
-
-
+/* AUTO */
+if(Object.keys(data).length===0) unlock("welcome");
+if(new Date().getHours()<6) unlock("early");
 
 setInterval(()=>{
-
-
-if(Date.now()-start>60000)
-
-unlock("professional");
-
-
+if(Date.now()-start>60000) unlock("professional");
 },1000);
-
-
 
 </script>
 
-
 </body>
-
 </html>
