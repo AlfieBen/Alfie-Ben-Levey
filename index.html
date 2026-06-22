@@ -58,6 +58,7 @@ body {
 
 
 
+
 body::before {
 
     content:"";
@@ -88,6 +89,8 @@ body::before {
 
 
 
+
+
 @keyframes greyMove {
 
     from {
@@ -103,6 +106,8 @@ body::before {
     }
 
 }
+
+
 
 
 
@@ -135,6 +140,8 @@ body::after {
     pointer-events:none;
 
 }
+
+
 
 
 
@@ -183,6 +190,41 @@ body::after {
         opacity:0.6;
 
     }
+
+}
+
+
+
+
+
+/* soft fade at top and bottom */
+
+.fade {
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:0;
+
+    pointer-events:none;
+
+
+    background:
+
+    linear-gradient(
+
+    to bottom,
+
+    rgba(0,0,0,0.65),
+
+    transparent 18%,
+
+    transparent 82%,
+
+    rgba(0,0,0,0.65)
+
+    );
 
 }
 
@@ -244,6 +286,8 @@ body::after {
 
 
 
+
+
 .card:hover {
 
     transform:
@@ -296,11 +340,14 @@ body::after {
 
 
 
+
+
 .card:hover::after {
 
     opacity:1;
 
 }
+
 
 
 
@@ -320,6 +367,8 @@ h1 {
 
 
 
+
+
 p {
 
     margin-top:45px;
@@ -329,6 +378,7 @@ p {
     font-size:clamp(1.1rem,2vw,1.35rem);
 
 }
+
 
 
 
@@ -364,6 +414,9 @@ p {
 
 
 <body>
+
+
+<div class="fade"></div>
 
 
 <div class="card">
