@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -9,15 +10,28 @@
 
 <style>
 
+html {
+
+    min-height:100%;
+
+    background:#050505;
+
+}
+
+
+
 body {
 
     margin:0;
 
+    min-height:100vh;
     min-height:100dvh;
 
     display:flex;
     justify-content:center;
     align-items:center;
+
+    background-color:#050505;
 
     background:
     radial-gradient(
@@ -53,8 +67,7 @@ body::before {
     transparent 70%
     );
 
-    animation:
-    greyMove 10s infinite alternate;
+    animation:greyMove 10s infinite alternate;
 
 }
 
@@ -283,7 +296,7 @@ p {
 
 
 
-@media (max-width: 600px) {
+@media (max-width:600px) {
 
     .card {
 
