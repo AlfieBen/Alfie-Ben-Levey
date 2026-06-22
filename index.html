@@ -13,12 +13,15 @@
 
 html,
 body {
+
     width:100%;
     height:100%;
     margin:0;
     overflow:hidden;
     background:#050505;
+
 }
+
 
 body {
 
@@ -31,7 +34,9 @@ body {
 
     align-items:center;
 
+
     background:
+
     radial-gradient(
     circle at center,
     #202020 0%,
@@ -39,15 +44,18 @@ body {
     #050505 100%
     );
 
+
     color:#f5f5f5;
 
     font-family:Arial, Helvetica, sans-serif;
 
     transition:.5s;
+
 }
 
 
-/* toggle button */
+
+/* Theme button */
 
 .themeButton {
 
@@ -78,6 +86,7 @@ body {
     font-size:20px;
 
     transition:.3s;
+
 }
 
 
@@ -88,6 +97,9 @@ body {
 }
 
 
+
+
+/* soft grey moving background */
 
 body::before {
 
@@ -123,11 +135,13 @@ body::before {
 
 @keyframes greyMove {
 
+
 from {
 
 transform:translate(-40px,-30px);
 
 }
+
 
 to {
 
@@ -135,51 +149,14 @@ transform:translate(40px,30px);
 
 }
 
-}
-
-
-
-
-body::after {
-
-    content:"";
-
-    position:absolute;
-
-    width:200vw;
-
-    height:200vh;
-
-    top:50%;
-
-    left:50%;
-
-
-    background:
-
-
-    radial-gradient(
-
-    circle,
-
-    rgba(45,90,255,0.28),
-
-    transparent 65%
-
-    );
-
-
-    filter:blur(45px);
-
-
-    animation:blueMove 12s ease-in-out infinite;
-
-
-    pointer-events:none;
 
 }
 
-with this:
+
+
+
+
+/* moving glow */
 
 body::after {
 
@@ -220,29 +197,89 @@ body::after {
 }
 
 
-/* light mode glow */
+
+
+
+/* light mode red glow */
 
 .light::after {
 
     background:
 
-
     radial-gradient(
 
     circle,
 
-    rgba(220,55,45,0.12),
+    rgba(190,35,35,0.10),
 
-    transparent 70%
+    transparent 72%
 
     );
 
 
-    filter:blur(55px);
+    filter:blur(60px);
 
 }
 
 
+
+
+
+@keyframes blueMove {
+
+
+0% {
+
+transform:translate(-60%,-50%) scale(0.9);
+
+opacity:0.6;
+
+}
+
+
+25% {
+
+transform:translate(-40%,-60%) scale(1.05);
+
+opacity:0.8;
+
+}
+
+
+50% {
+
+transform:translate(-45%,-35%) scale(1.15);
+
+opacity:1;
+
+}
+
+
+75% {
+
+transform:translate(-65%,-45%) scale(1.05);
+
+opacity:0.8;
+
+}
+
+
+100% {
+
+transform:translate(-60%,-50%) scale(0.9);
+
+opacity:0.6;
+
+}
+
+
+}
+
+
+
+
+
+/* Card */
 
 .card {
 
@@ -252,23 +289,38 @@ z-index:1;
 
 text-align:center;
 
+
 width:min(650px,80vw);
+
 
 padding:90px 130px;
 
-background:rgba(255,255,255,0.045);
 
-border:1px solid rgba(255,255,255,0.12);
+background:
+
+rgba(255,255,255,0.045);
+
+
+border:
+
+1px solid rgba(255,255,255,0.12);
+
 
 border-radius:35px;
 
+
 backdrop-filter:blur(20px);
+
+
 
 box-shadow:
 
+
 inset 0 0 30px rgba(255,255,255,0.02),
 
+
 0 30px 100px rgba(0,0,0,0.7);
+
 
 
 transition:
@@ -281,7 +333,9 @@ box-shadow .35s ease;
 
 
 
+
 .card:hover {
+
 
 transform:
 
@@ -290,13 +344,19 @@ translateY(-10px)
 scale(1.03);
 
 
+
 box-shadow:
+
 
 inset 0 0 30px rgba(255,255,255,0.01),
 
+
 0 45px 130px rgba(0,0,0,0.9);
 
+
 }
+
+
 
 
 
@@ -311,14 +371,21 @@ inset:-2px;
 border-radius:35px;
 
 
+
 background:
 
 linear-gradient(
+
 120deg,
+
 transparent,
+
 rgba(255,255,255,0.05),
+
 transparent
+
 );
+
 
 
 opacity:0;
@@ -340,17 +407,21 @@ opacity:1;
 
 
 
+
 h1 {
 
 margin:0;
+
 
 font-size:
 
 clamp(2.2rem,6vw,4rem);
 
+
 letter-spacing:
 
 clamp(2px,.4vw,6px);
+
 
 font-weight:500;
 
@@ -363,7 +434,10 @@ p {
 
 margin-top:45px;
 
+
 color:#888;
+
+
 
 font-size:
 
@@ -374,24 +448,32 @@ clamp(1.1rem,2vw,1.35rem);
 
 
 
-/* light mode */
+
+
+/* Light mode */
 
 
 .light {
 
+
 background:
+
 
 radial-gradient(
 
 circle at center,
 
+
 #eeeeee,
 
+
 #bbbbbb,
+
 
 #777777
 
 );
+
 
 color:#111;
 
@@ -401,9 +483,12 @@ color:#111;
 
 .light .card {
 
+
 background:
 
+
 rgba(255,255,255,0.35);
+
 
 }
 
@@ -421,9 +506,12 @@ color:#555;
 
 color:#111;
 
-background:rgba(0,0,0,0.08);
+background:
+
+rgba(0,0,0,0.08);
 
 }
+
 
 
 
@@ -436,11 +524,14 @@ background:rgba(0,0,0,0.08);
 
 width:82vw;
 
+
 padding:45px 25px;
+
 
 border-radius:28px;
 
 }
+
 
 
 p {
@@ -460,7 +551,9 @@ margin-top:30px;
 
 
 
+
 <body>
+
 
 
 <button class="themeButton" onclick="toggleTheme()">🌙</button>
@@ -469,16 +562,21 @@ margin-top:30px;
 
 <div class="card">
 
+
 <h1>Alfie Ben Levey</h1>
 
+
 <p>I'm better than you and you know it</p>
+
 
 </div>
 
 
 
 
+
 <script>
+
 
 function toggleTheme(){
 
@@ -498,7 +596,9 @@ function toggleTheme(){
 
 }
 
+
 </script>
+
 
 
 
