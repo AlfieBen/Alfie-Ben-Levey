@@ -278,7 +278,6 @@ opacity:.45;
 
 
 
-/* ADDED SCROLLING */
 
 #list{
 
@@ -340,6 +339,66 @@ display:none;
 
 
 
+
+/* FIXED LIGHT MODE */
+
+.light {
+
+background:
+
+radial-gradient(
+
+circle at center,
+
+#eeeeee,
+
+#bbbbbb,
+
+#777777
+
+);
+
+color:#111;
+
+}
+
+
+
+.light .card {
+
+background:
+
+rgba(255,255,255,0.35);
+
+border-color:
+
+rgba(0,0,0,0.15);
+
+}
+
+
+
+.light p {
+
+color:#333;
+
+}
+
+
+
+.light .themeButton {
+
+color:#111;
+
+background:
+
+rgba(0,0,0,0.08);
+
+}
+
+
+
+
 @media(max-width:600px){
 
 
@@ -370,6 +429,7 @@ border-radius:28px;
 
 
 
+
 <div class="card" id="main">
 
 <h1>Alfie Ben Levey</h1>
@@ -377,7 +437,6 @@ border-radius:28px;
 <p>I'm better than you and you know it</p>
 
 </div>
-
 
 
 
@@ -416,12 +475,12 @@ Back
 
 
 
+
 <script>
 
 
 let data =
 JSON.parse(localStorage.getItem("achievements")) || {};
-
 
 
 let cardClicks=0;
@@ -513,17 +572,17 @@ text:"You found everything hidden on this page."
 
 
 
-
-
 function save(){
 
 localStorage.setItem(
+
 "achievements",
+
 JSON.stringify(data)
+
 );
 
 }
-
 
 
 
@@ -540,7 +599,6 @@ save();
 }
 
 }
-
 
 
 
@@ -664,15 +722,12 @@ render();
 
 function closeAchievements(){
 
-
 document.getElementById("achievements").classList.add("hidden");
 
 
 document.getElementById("main").classList.remove("hidden");
 
-
 }
-
 
 
 
@@ -680,15 +735,11 @@ document.getElementById("main").classList.remove("hidden");
 
 function toggleTheme(){
 
-
 document.body.classList.toggle("light");
-
 
 unlock("night");
 
-
 }
-
 
 
 
@@ -718,10 +769,10 @@ save();
 
 render();
 
-}
 
 }
 
+}
 
 
 
@@ -747,19 +798,17 @@ unlock("early");
 
 
 
-
 setInterval(()=>{
 
 
-if(Date.now()-startTime>60000)
+if(Date.now()-startTime>60000){
 
 unlock("professional");
 
+}
+
 
 },1000);
-
-
-
 
 
 
